@@ -1,0 +1,31 @@
+# 플로이드 워셜 알고리즘 구현
+
+INF = int(1e9)
+
+node = int(input())
+line = int(input())
+
+graph = [[INF] * node for i in range(node)]
+
+for i in range(line):
+    x,y,length = map(int,input().split())
+    graph[x-1][y-1] = length
+
+for a in range(node):
+    for b in range(node):
+        if a == b:
+            graph[a][b] = 0
+
+
+for k in range(node):
+    for a in range(node):
+        for b in range(node):
+            graph[a][b] = min(graph[a][b],graph[a][k]+graph[k][b])
+
+for a in range(node):
+    for b in range(node):
+        if graph[a][b] == INF:
+            print("INFINITY", end = " ")
+        else :
+            print(graph[a][b], end = " ")
+    print()
