@@ -1,0 +1,36 @@
+import heapq
+INF = (1e9)
+n,m,c = map(int,input().split())
+
+graph = [[] for i in range(n+1)]
+distance = [INF] * (n+1)
+visited = [False] * (n+1)
+ncount = 0
+mdis = 0
+for i in range(m):
+    x,y,z = map(int, input().split())
+    graph[x].append((y,z))
+
+heap = []
+
+def dijkstra(c,ncount,mdis):
+    heapq.heappush(heap,(c,0))
+    distance[c] = 0
+    while heap :
+        node = heapq.heappop(heap)
+        if visited[node[0]] == True:
+            continue
+        for i in graph[node[0]]:
+            if distance[node[0]] > node[1]:
+                distance[node[0]] = node[1]
+            heapq.heappush(heap,(i[0],i[1]))
+            ncount += 1
+            visited[node[0]] = True
+            if mdis < i[1]:
+                mdis = i[1]
+
+    return ncount, mdis
+
+ncount,mdis = dijkstra(c,ncount,mdis)
+
+print(ncount,mdis)
