@@ -1,0 +1,25 @@
+from collections import deque
+
+node, line = map(int, input().split())
+
+graph = [[] for i in range(node+1)]
+d = [0] * (node+1)
+q = deque()
+
+for i in range(line):
+    x,y = map(int, input().split())
+    graph[x].append(y)
+    d[y] += 1
+
+for i in range(1, node + 1):
+     if d[i] == 0:
+        q.append(i)
+
+while q:
+    clue = q.popleft()
+    print(clue,end=' ')
+    for i in graph[clue]:
+        d[i] -= 1
+        if d[i] == 0:
+            q.append(i)
+
