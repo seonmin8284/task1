@@ -1,0 +1,33 @@
+def find_parent(parent,x):
+    if parent[x] != x:
+        return find_parent(parent,parent[x])
+    return parent[x]
+
+n,m = map(int,input().split())
+parent = [0] * (n+1)
+d = []
+
+for i in range(n+1):
+    parent[i] = i
+
+for i in range(m):
+    x,y,z = map(int,input().split())
+    d.append((z,x,y))
+
+d.sort()
+result = 0
+last = 0
+
+for dd in d:
+    cost,x,y = dd
+    if find_parent(parent,x) != find_parent(parent, y):
+
+        if find_parent(parent, x) < find_parent(parent, y):
+            parent[find_parent(parent, y)] = find_parent(parent, x)
+        else:
+            parent[find_parent(parent, x)] = find_parent(parent, y)
+        result += cost
+        last = cost
+
+print(result-last)
+
