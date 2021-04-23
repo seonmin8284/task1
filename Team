@@ -1,0 +1,22 @@
+x,y = map(int,input().split())
+d=[0]*(x+1)
+for i in range(x+1):
+    d[i] = i
+
+def find_parent(parent,x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent,parent[x])
+    return parent[x]
+
+for i in range(y):
+    a,b,c = map(int,input().split())
+    if a == 0:
+        if d[b] < d[c] :
+            d[c] = d[b]
+        else :
+            d[b] = d[c]
+    if a == 1:
+        if find_parent(d,b) == find_parent(d,c):
+            print("YES")
+        else :
+            print("NO")
